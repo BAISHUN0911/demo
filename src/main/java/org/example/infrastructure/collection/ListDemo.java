@@ -1,6 +1,7 @@
 package org.example.infrastructure.collection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.ListIterator;
 
@@ -21,5 +22,10 @@ public class ListDemo {
             System.out.println(listIterator.next());
         }
         Iterator<String> iterator = list.iterator();
+
+        // 数组扩容
+        int[] arr = {1, 2, 3};
+        int[] newArr = Arrays.copyOf(arr, 4);
+        System.out.println(Arrays.toString(newArr));
     }
 }

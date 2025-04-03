@@ -1,6 +1,9 @@
 package org.example.scene.authorization;
 
+import org.bouncycastle.util.encoders.Base64Encoder;
+
 import java.security.MessageDigest;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -48,7 +51,10 @@ public class Signature {
     String sortedQueryString = sortQueryStringTmp.substring(1);
 
     String sign = Signature.SHA256(sortedQueryString);
-    sign = (new sun.misc.BASE64Encoder().encode(sign.getBytes("UTF-8"))).replace("\n", "").replace("\r", "");//需替换BASE64的换行
+    // jdk21废弃了sun包
+    //    sign = (new sun.misc.BASE64Encoder().encode(sign.getBytes("UTF-8"))).replace("\n", "").replace("\r", "");
+    sign = Base64.getEncoder().encodeToString(sign.getBytes("UTF-8")).replace("\n", "").replace("\r", "");
+
     return sign;
 
   }
