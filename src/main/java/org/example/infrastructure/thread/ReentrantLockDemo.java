@@ -10,8 +10,12 @@ import java.util.concurrent.locks.ReentrantLock;
  * @Date 2024/8/24 10:01
  */
 public class ReentrantLockDemo {
+    // 创建一个可重入锁
     private final ReentrantLock lock = new ReentrantLock();
 
+    /**
+     * 创建一个线程池，用来执行多线程
+     */
     private final ExecutorService executor = Executors.newFixedThreadPool(8);
 
     /**
@@ -39,8 +43,8 @@ public class ReentrantLockDemo {
 
     public String doM1() {
         for (int i = 0; i < 8; i++) {
-            executor.submit(this::m1);
-//            executor.submit(this::m2);
+//            executor.submit(this::m1);
+            executor.submit(this::m2);
         }
         try {
             Thread.sleep(1000 * 1);
@@ -52,9 +56,36 @@ public class ReentrantLockDemo {
         return "ok";
     }
 
+    /** 可重入锁示例 已获取锁的线程可再次获取锁 */
+    public void outerMethod() {
+        // 线程第一次获取锁
+        lock.lock();
+        try {
+            System.out.println(Thread.currentThread().getName() + " 在 outerMethod 中获取了锁");
+            innerMethod(); // 调用内部方法，再次尝试获取锁
+        } finally {
+            // 线程第一次释放锁
+            lock.unlock();
+            System.out.println(Thread.currentThread().getName() + " 在 outerMethod 中释放了锁");
+        }
+    }
+
+    public void innerMethod() {
+        // 线程第二次获取锁（因为是同一个线程，所以不会被阻塞）
+        lock.lock();
+        try {
+            System.out.println(Thread.currentThread().getName() + " 在 innerMethod 中成功获取了锁");
+        } finally {
+            // 线程第二次释放锁
+            lock.unlock();
+            System.out.println(Thread.currentThread().getName() + " 在 innerMethod 中释放了锁");
+        }
+    }
+
     public static void main(String[] args) {
         ReentrantLockDemo demo = new ReentrantLockDemo();
-        System.out.println(demo.doM1());
+//        System.out.println(demo.doM1());
+        demo.outerMethod();
     }
 
 }
