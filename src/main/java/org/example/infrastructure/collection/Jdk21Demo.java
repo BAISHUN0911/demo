@@ -21,6 +21,7 @@ public class Jdk21Demo {
     Person p1 = new Person("张三", 18);
     Person p2 = new Person("jack", 22);
     System.out.println("name: " + p1.name() + ", age: " + p1.age);
+//    p1.age = 20;    // 不可变对象，不能修改属性值
 
     String str = """
             {
@@ -34,6 +35,7 @@ public class Jdk21Demo {
 //    personList.add(p1);    // 不可变集合，添加会报错
     // 增强Stream toList()
     List<String> nameList = personList.stream().map(Person::name).toList();
+    System.out.println(nameList);
 
     // JDK 21：百万级轻量级线程
     try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {

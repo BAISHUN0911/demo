@@ -55,7 +55,7 @@ class IncrementTask2 extends Thread {
     @Override
     public void run() {
         System.out.println(Thread.currentThread().getName() + "开始执行run()");
-        for (int i = 0; i < 1500; i++) {
+        for (int i = 0; i < 100000; i++) {
             counter.m1();
         }
     }
