@@ -11,6 +11,9 @@ public class Main {
     public static void main(String[] args) {
         int[] arr = {1, 10, 4, 20, 7};
         sortArr(arr);
+        System.out.println(123456 % 4);
+        System.out.println((123456 / 4) % 8);
+        System.out.println(Arrays.toString(arr));
     }
 
     private static void sortArr(int[] arr) {

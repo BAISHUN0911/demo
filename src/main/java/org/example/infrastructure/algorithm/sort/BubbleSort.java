@@ -10,13 +10,14 @@ import java.util.Arrays;
  */
 public class BubbleSort {
     public static void main(String[] args) {
-        int[] arr = {3, 2, 4, 1};
+        int[] arr = {4, 3, 2, 1};
         int[] sorted = bubbleSort(arr);
         System.out.println(Arrays.toString(sorted));
     }
 
     /**
      * 两层for循环，时间复杂度O(n2)
+     * 外层i代表冒泡次数，n-1次即可
      * 内层的j最大值情况：第一次遍历：arr.length - 2，因为需要防止数组索引【j+1】越界
      * 内层的j最小值 = 1，最后一次遍历只需要比较arr[0]和arr[1]即可，所以i最大为arr.length - 2
      *
