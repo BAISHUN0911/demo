@@ -7,11 +7,10 @@ package org.example.infrastructure.thread;
  */
 public class Main {
     public static void main(String[] args) {
-//        Counter obj = new Counter();
-        SynchronizedDemo obj = new SynchronizedDemo();
-        IncrementTask2 t1 = new IncrementTask2(obj);
-        IncrementTask2 t2 = new IncrementTask2(obj);
-        IncrementTask2 t3 = new IncrementTask2(obj);
+        SynchronizedDemo singletonBusinessObj = new SynchronizedDemo();
+        IncrementTask t1 = new IncrementTask(singletonBusinessObj);
+        IncrementTask t2 = new IncrementTask(singletonBusinessObj);
+        IncrementTask t3 = new IncrementTask(singletonBusinessObj);
 
         try {
             t1.start();
@@ -24,39 +23,7 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        System.out.println(obj.getCount());
+        System.out.println(singletonBusinessObj.getCount());
 
-    }
-}
-
-class IncrementTask extends Thread {
-    private final Counter counter;
-
-    public IncrementTask(Counter counter) {
-        this.counter = counter;
-    }
-
-    @Override
-    public void run() {
-        System.out.println(Thread.currentThread().getName() + "开始执行run()");
-        for (int i = 0; i < 1500; i++) {
-            counter.increment();
-        }
-    }
-}
-
-class IncrementTask2 extends Thread {
-    private final SynchronizedDemo counter;
-
-    IncrementTask2(SynchronizedDemo counter) {
-        this.counter = counter;
-    }
-
-    @Override
-    public void run() {
-        System.out.println(Thread.currentThread().getName() + "开始执行run()");
-        for (int i = 0; i < 100000; i++) {
-            counter.m1();
-        }
     }
 }

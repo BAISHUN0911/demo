@@ -13,19 +13,27 @@ public class SharedResource {
         while (!condition) {
             try {
                 System.out.println(Thread.currentThread().getName() + " is waiting...");
-                this.wait(1000 * 2);
-                wait();
-                System.out.println(Thread.currentThread().getName() + " while end");
+                /*
+                * 释放当前对象锁,进入等待队列（WAITING 状态）
+                * 另一个线程调用了 this.notify() 或 this.notifyAll()，并且该线程释放了锁（退出 synchronized 块），当前等待线程才会被唤醒。
+                * 唤醒后仍需要竞争锁，成功获取锁后，进入同步方法（RUNNABLE 状态）
+                * */
+                this.wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        for (int i = 0; i < 10; i++) {
+        System.out.println(Thread.currentThread().getName() + "begins to execute");
+        // condition 为 true 时执行
+        for (int i = 0; i < 3; i++) {
             System.out.println(Thread.currentThread().getName() + " is proceeding...");
         }
+        condition = false;
     }
     public synchronized void doNotify() {
+        // 修改执行标志
         condition = true;
+        // 必须要唤醒正在等待的线程
         notify();
         System.out.println(Thread.currentThread().getName() + " has notified...");
     }

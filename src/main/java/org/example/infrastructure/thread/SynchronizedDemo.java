@@ -1,16 +1,15 @@
 package org.example.infrastructure.thread;
 
+import lombok.Getter;
+
 /**
  * @description: Synchronized使用示例
  * @Author BAISHUN
  * @Date 2024/8/19 16:44
  */
+@Getter
 public class SynchronizedDemo {
     private int count = 0;
-
-    public int getCount() {
-        return count;
-    }
 
     /**
      * 非同步方法，并发修改最终结果可能不是预期

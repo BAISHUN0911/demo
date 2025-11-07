@@ -11,23 +11,24 @@ public class WaitNotifyExample {
         System.out.println("当前线程名：" + Thread.currentThread().getName());
         SharedResource sharedResource = new SharedResource();
         Thread thread1 = new Thread(() -> {
-            System.out.println("thread1开始执行");
+            System.out.println(Thread.currentThread().getName()+ "开始执行");
             sharedResource.doWait();
         }, "Thread-1");
 
-        Thread thread2 = new Thread(() -> {
-            System.out.println("thread2开始执行");
+        Thread notifyThread = new Thread(() -> {
+            System.out.println(Thread.currentThread().getName()+ "开始执行");
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
+                System.out.println(Thread.currentThread().getName()+ "开始执行唤醒");
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
             sharedResource.doNotify();
-        }, "Thread-2");
+        }, "notifyThread");
 
         thread1.start();
-//        thread2.start();
-        Thread.sleep(1000 * 3);
+        notifyThread.start();
+        Thread.sleep(1000 * 15);
 
     }
 }

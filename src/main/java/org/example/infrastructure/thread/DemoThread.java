@@ -6,7 +6,7 @@ package org.example.infrastructure.thread;
  * @Author BAISHUN
  * @Date: 2024/6/19 16:41
  */
-public class DemoThread implements Runnable{
+public class DemoThread implements Runnable {
     @Override
     public void run() {
         System.out.println("当前线程：" + Thread.currentThread().getName() + " running...");
